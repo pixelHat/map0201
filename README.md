@@ -33,35 +33,33 @@ O projeto utiliza o `Makefile` para gerar binários distintos:
 
 ## Execução
 
-Você pode executar o algoritmo em três cenários diferentes para comparar o desempenho:
+O programa recebe o tamanho da matriz quadrada ($n$) diretamente como argumento de linha de comando. A matriz é gerada aleatoriamente.
 
-### 1. Versão Sequencial (Single Thread)
+### Regra de Exibição
+* **$n <= 5$**: O programa imprime a matriz original, a matriz triangular e o vetor solução $x$.
+* **$n \gt 5$**: Apenas o status da execução e os tempos são exibidos para evitar poluição no terminal.
 
-Roda o binário compilado sem as diretivas de paralelismo.
+### Cenários de Teste
 
-```bash
-./gauss_elimination
-```
-
-### 2. Versão Paralela (Carga Total)
-
-Usa o OpenMP com o comportamento padrão (utiliza todos os núcleos lógicos disponíveis no seu Arch Linux).
+#### 1. Versão Sequencial (Single Thread)
 
 ```bash
-./gauss_elimination_openmp
+./gauss_elimination 100
 ```
 
-### 3. Versão Paralela (Limitada)
+#### 2. Versão Paralela (Carga Total)
 
-Define manualmente a quantidade de threads para testar a escalabilidade.
+Usa todos os cores disponíveis no sistema por padrão.
+
+```bash
+./gauss_elimination_openmp 100
+```
+
+#### 3. Versão Paralela (Limitada)
+
+Define manualmente o número de threads para testes de escalabilidade.
 
 ```bash
 export OMP_NUM_THREADS=4
-./gauss_elimination_openmp
+./gauss_elimination_openmp 100
 ```
-
- ## Estrutura
-* `gauss-elimination.c`: Core do algoritmo (Eliminação e Substituição Regressiva).
-* `tests.c`: Suite de testes unitários.
-* `Makefile`: Scripts de compilação automatizada.
-
